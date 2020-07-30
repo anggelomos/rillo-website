@@ -1,0 +1,428 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Rillo!</title>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
+
+
+<script>
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyDDs9uzyIGzS97U9EjP9bzAolzCQKHShHM",
+    authDomain: "rillo-web.firebaseapp.com",
+    databaseURL: "https://rillo-web.firebaseio.com",
+    projectId: "rillo-web",
+    storageBucket: "rillo-web.appspot.com",
+    messagingSenderId: "78389839019",
+    appId: "1:78389839019:web:4c049ee8d70d42a3"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+</script>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<link href="css/style.css" rel="stylesheet"/>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="row">
+        
+        <a href="profiles.html" class="col-3 mt-4" >
+            <img src="imagenes/profile-icon.png" alt="profile icon" id="profile-icon">
+        </a>
+        <h1 class="col-5 text-center align-middle" id="titulo-rillo">Rillo!</h1>
+        <div class="col-4"></div>
+    
+    </div>
+
+
+    <div class="row" style="margin-top: 2%;">
+
+        <div class="col-3"></div>
+        <div class="col-5">
+            <input type="text" class="form-control" id="barra-escribir" placeholder="Escribe aquí...">
+        </div>
+
+        <div class="col-4">
+            <button type="button" class="btn btn-primary" id="boton-enviar" onclick="enviador();">Enviar</button>
+        </div>
+        
+    </div>
+
+
+    <div class="row mt-4">
+
+        <div class="col-3"></div>
+        <div class="col-5">
+            <div class="row">
+                <div class="col-6">
+                    <button type="button" class="btn btn-light" id="boton-generador" onclick="send_generador();"> <img src="imagenes/gen-icon.png" alt="Icono Generador" id="generador-icon"> <br> Generador</button>
+                </div>
+
+                <div class="col-6">
+                    <button type="button" class="btn btn-light" id="boton-l-aleatoria" onclick="send_letra_aleatoria()">
+                        <h1 id="letra-aleatoria">a</h1>
+                        <p id="texto-l-aleatoria">Letra aleatoria</p>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-4"></div>
+
+    </div>
+
+
+    <div class="row mt-2">
+
+        <div class="col-3"></div>
+        <div class="col-5">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-light align-middle" id="boton-patron" onclick="toggle_patron();"> <p>Patron</p></button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-4"></div>
+
+    </div> 
+
+    <div id = "celda"></div>
+
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-5">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-light" id="boton-conectar" onclick="conectado_boton();"> <h4 id="texto-conectar">Conectar</h4></button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-4"></div>
+
+    </div>    
+
+</div>
+
+
+</div>
+
+<script>
+
+var db = firebase.firestore();
+var celda_patron_on = false;
+var array_patron = [0, 0, 0, 0, 0, 0];
+
+function enviador(){
+    var lectura_barra = document.getElementById('barra-escribir').value;
+
+    if(lectura_barra!="")
+    {
+        db.collection("rillo-main").doc("funciones").update({
+                dato: lectura_barra,
+                funcion: "escribir",
+                recibido: 0
+            })
+        
+    }
+
+    document.getElementById("boton-enviar").classList.remove("btn-primary");
+    document.getElementById("boton-enviar").classList.add("btn-warning");
+    setTimeout(function(){
+    document.getElementById("boton-enviar").classList.remove("btn-warning");
+    document.getElementById("boton-enviar").classList.add("btn-primary");
+    document.getElementById('barra-escribir').value = '';}, 500);
+
+    
+    
+}
+
+function send_generador(){
+    if(lectura_barra!="")
+    {
+        db.collection("rillo-main").doc("funciones").update({
+                dato: lectura_barra,
+                funcion: "escribir",
+                recibido: 0
+            })
+        
+    }
+
+    document.getElementById("boton-enviar").classList.remove("btn-primary");
+    document.getElementById("boton-enviar").classList.add("btn-warning");
+    setTimeout(function(){
+    document.getElementById("boton-enviar").classList.remove("btn-warning");
+    document.getElementById("boton-enviar").classList.add("btn-primary");}, 500);
+}
+
+function send_generador(){
+    
+    db.collection("rillo-main").doc("funciones").update({
+            funcion: "generador",
+            recibido: 0
+        })
+        
+    document.getElementById("boton-generador").classList.remove("btn-light");
+    document.getElementById("boton-generador").classList.add("btn-primary");
+    document.getElementById("generador-icon").src = "imagenes/gen-iconw.png"
+    setTimeout(function(){
+    document.getElementById("boton-generador").classList.remove("btn-primary");
+    document.getElementById("boton-generador").classList.add("btn-light")
+    document.getElementById("generador-icon").src = "imagenes/gen-icon.png";}, 500);
+}
+
+function send_letra_aleatoria(){
+
+    var abecedario = "abcdefghijklmnñopqrstuvwxyz";
+    var num_random = Math.floor((Math.random() * 26) + 1);
+
+    var letra = abecedario[num_random]
+    
+    db.collection("rillo-main").doc("funciones").update({
+                dato: letra,
+                funcion: "escribir",
+                recibido: 0
+            })
+    
+
+    document.getElementById('letra-aleatoria').innerHTML = letra;
+    document.getElementById("boton-l-aleatoria").classList.remove("btn-light");
+    document.getElementById("boton-l-aleatoria").classList.add("btn-primary");
+    setTimeout(function(){
+    document.getElementById("boton-l-aleatoria").classList.remove("btn-primary");
+    document.getElementById("boton-l-aleatoria").classList.add("btn-light");}, 500);
+}
+
+db.collection("rillo-main").doc("funciones")
+    .onSnapshot(function(doc) {
+        
+        conectado_listener(doc.data());
+    });
+
+function conectado_listener(data){
+    if(data["conectado"]){
+        document.getElementById("boton-conectar").classList.remove("btn-light");
+        document.getElementById("boton-conectar").classList.add("btn-primary");
+        document.getElementById('texto-conectar').innerHTML = "Desconectar";
+    }
+    else{
+        document.getElementById("boton-conectar").classList.remove("btn-primary");
+        document.getElementById("boton-conectar").classList.add("btn-light")
+        document.getElementById('texto-conectar').innerHTML = "Conectar";
+    }
+}
+
+function conectado_boton(){
+    
+
+    var ver_conexión = new Promise((resolve, reject) => {
+        db.collection("rillo-main").doc("funciones").get().then(function(doc) {
+            if (doc.exists) {
+                
+                datos_conexion = doc.data();
+                resolve(doc.data());
+                
+            } else {
+                // doc.data() will be undefined in this case
+                reject =[];
+                console.log("No such document!");
+            }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+    });
+
+    ver_conexión.then((datos_conexion) => {
+        if(datos_conexion["conectado"]){
+            db.collection("rillo-main").doc("funciones").update({
+                conectado: false
+            })
+        }
+        else{
+            db.collection("rillo-main").doc("funciones").update({
+                funcion: "nope",
+                recibido: 0
+            })
+        }
+    }).catch((error) => console.log("error"))
+
+    
+
+}
+
+
+function toggle_patron(){
+
+    celda_patron_on = !celda_patron_on;
+    
+    if(celda_patron_on){
+        array_patron = [0, 0, 0, 0, 0, 0];
+        document.getElementById('celda').innerHTML = '<div class="row mt-2 mb-4"><div class="col-3"></div><div class="col-5"><div class="row"><div class="col"><div class="row"><div class="col text-center col-celda"><button type="button" class="btn btn-light boton_celda_iz" id="btn_celda_1" onclick="celda_press(1)"><img class="circulo_celda" id="circulo_celda_1" src="imagenes/circulo_celda.png" alt="icono circulo celda"></button><button type="button" class="btn btn-light boton_celda_iz" id="btn_celda_2" onclick="celda_press(2)"><img class="circulo_celda" id="circulo_celda_2" src="imagenes/circulo_celda.png" alt="icono circulo celda"></button><button type="button" class="btn btn-light boton_celda_iz" id="btn_celda_3" onclick="celda_press(3)"><img class="circulo_celda" id="circulo_celda_3" src="imagenes/circulo_celda.png" alt="icono circulo celda"></button></div><div class="col text-center col-celda"><button type="button" class="btn btn-light boton_celda_der" id="btn_celda_4" onclick="celda_press(4)"><img class="circulo_celda" id="circulo_celda_4" src="imagenes/circulo_celda.png" alt="icono circulo celda"></button><button type="button" class="btn btn-light boton_celda_der" id="btn_celda_5" onclick="celda_press(5)"><img class="circulo_celda" id="circulo_celda_5" src="imagenes/circulo_celda.png" alt="icono circulo celda"></button><button type="button" class="btn btn-light boton_celda_der" id="btn_celda_6" onclick="celda_press(6)"><img class="circulo_celda" id="circulo_celda_6" src="imagenes/circulo_celda.png" alt="icono circulo celda"></button></div></div></div></div></div><div class="col-4"><button type="button" class="btn btn-primary btn_celda" id="btn_enviar_celda" onclick="enviar_celda()"><p>Enviar</p></button><button type="button" class="btn btn-light btn_celda" onclick="limpiar_celda()"><p>Limpiar</p></button></div></div>';
+    }
+    else{
+        document.getElementById('celda').innerHTML = '';
+    }
+    
+}
+
+function celda_press(numero_celda){
+    
+    switch(numero_celda) {
+        case 1:
+            if(array_patron[0]){
+                array_patron[0] = 0;
+                document.getElementById("btn_celda_1").classList.remove("btn-primary");
+                document.getElementById("btn_celda_1").classList.add("btn-light");
+                document.getElementById("circulo_celda_1").src = "imagenes/circulo_celda.png"
+            }
+            else{
+                array_patron[0] = 1;
+                document.getElementById("btn_celda_1").classList.remove("btn-light");
+                document.getElementById("btn_celda_1").classList.add("btn-primary");
+                document.getElementById("circulo_celda_1").src = "imagenes/circulo_celdaw.png"
+            }
+
+            break;
+        case 2:
+            if(array_patron[1]){
+                array_patron[1] = 0;
+                document.getElementById("btn_celda_2").classList.remove("btn-primary");
+                document.getElementById("btn_celda_2").classList.add("btn-light");
+                document.getElementById("circulo_celda_2").src = "imagenes/circulo_celda.png"
+            }
+            else{
+                array_patron[1] = 1;
+                document.getElementById("btn_celda_2").classList.remove("btn-light");
+                document.getElementById("btn_celda_2").classList.add("btn-primary");
+                document.getElementById("circulo_celda_2").src = "imagenes/circulo_celdaw.png"
+            }
+            break;
+        case 3:
+            if(array_patron[2]){
+                array_patron[2] = 0;
+                document.getElementById("btn_celda_3").classList.remove("btn-primary");
+                document.getElementById("btn_celda_3").classList.add("btn-light");
+                document.getElementById("circulo_celda_3").src = "imagenes/circulo_celda.png"
+            }
+            else{
+                array_patron[2] = 1;
+                document.getElementById("btn_celda_3").classList.remove("btn-light");
+                document.getElementById("btn_celda_3").classList.add("btn-primary");
+                document.getElementById("circulo_celda_3").src = "imagenes/circulo_celdaw.png"
+            }
+            break;
+        case 4:
+            if(array_patron[3]){
+                array_patron[3] = 0;
+                document.getElementById("btn_celda_4").classList.remove("btn-primary");
+                document.getElementById("btn_celda_4").classList.add("btn-light");
+                document.getElementById("circulo_celda_4").src = "imagenes/circulo_celda.png"
+            }
+            else{
+                array_patron[3] = 1;
+                document.getElementById("btn_celda_4").classList.remove("btn-light");
+                document.getElementById("btn_celda_4").classList.add("btn-primary");
+                document.getElementById("circulo_celda_4").src = "imagenes/circulo_celdaw.png"
+            }
+            break;
+        case 5:
+            if(array_patron[4]){
+                array_patron[4] = 0;
+                document.getElementById("btn_celda_5").classList.remove("btn-primary");
+                document.getElementById("btn_celda_5").classList.add("btn-light");
+                document.getElementById("circulo_celda_5").src = "imagenes/circulo_celda.png"
+            }
+            else{
+                array_patron[4] = 1;
+                document.getElementById("btn_celda_5").classList.remove("btn-light");
+                document.getElementById("btn_celda_5").classList.add("btn-primary");
+                document.getElementById("circulo_celda_5").src = "imagenes/circulo_celdaw.png"
+            }
+            break;
+        case 6:
+            if(array_patron[5]){
+                array_patron[5] = 0;
+                document.getElementById("btn_celda_6").classList.remove("btn-primary");
+                document.getElementById("btn_celda_6").classList.add("btn-light");
+                document.getElementById("circulo_celda_6").src = "imagenes/circulo_celda.png"
+            }
+            else{
+                array_patron[5] = 1;
+                document.getElementById("btn_celda_6").classList.remove("btn-light");
+                document.getElementById("btn_celda_6").classList.add("btn-primary");
+                document.getElementById("circulo_celda_6").src = "imagenes/circulo_celdaw.png"
+            }
+            break;
+        default:
+            // code block
+    }
+
+}
+
+function limpiar_celda(){
+    array_patron = [0, 0, 0, 0, 0, 0];
+
+    document.getElementById("btn_celda_1").classList.remove("btn-primary");
+    document.getElementById("btn_celda_1").classList.add("btn-light");
+    document.getElementById("circulo_celda_1").src = "imagenes/circulo_celda.png"
+
+    document.getElementById("btn_celda_2").classList.remove("btn-primary");
+    document.getElementById("btn_celda_2").classList.add("btn-light");
+    document.getElementById("circulo_celda_2").src = "imagenes/circulo_celda.png"
+
+    document.getElementById("btn_celda_3").classList.remove("btn-primary");
+    document.getElementById("btn_celda_3").classList.add("btn-light");
+    document.getElementById("circulo_celda_3").src = "imagenes/circulo_celda.png"
+
+    document.getElementById("btn_celda_4").classList.remove("btn-primary");
+    document.getElementById("btn_celda_4").classList.add("btn-light");
+    document.getElementById("circulo_celda_4").src = "imagenes/circulo_celda.png"
+
+    document.getElementById("btn_celda_5").classList.remove("btn-primary");
+    document.getElementById("btn_celda_5").classList.add("btn-light");
+    document.getElementById("circulo_celda_5").src = "imagenes/circulo_celda.png"
+
+    document.getElementById("btn_celda_6").classList.remove("btn-primary");
+    document.getElementById("btn_celda_6").classList.add("btn-light");
+    document.getElementById("circulo_celda_6").src = "imagenes/circulo_celda.png"
+
+}
+
+function enviar_celda(){
+    
+    db.collection("rillo-main").doc("funciones").update({
+            dato: array_patron,
+            funcion: "celda",
+            recibido: 0
+        })
+
+    document.getElementById("btn_enviar_celda").classList.remove("btn-primary");
+    document.getElementById("btn_enviar_celda").classList.add("btn-warning");
+    setTimeout(function(){
+    document.getElementById("btn_enviar_celda").classList.remove("btn-warning");
+    document.getElementById("btn_enviar_celda").classList.add("btn-primary");}, 500);
+        
+}
+
+</script>
+
+</body>
+</html>

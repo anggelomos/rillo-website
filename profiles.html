@@ -1,0 +1,596 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Rillo Perfil!</title>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
+
+
+<script>
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyDDs9uzyIGzS97U9EjP9bzAolzCQKHShHM",
+    authDomain: "rillo-web.firebaseapp.com",
+    databaseURL: "https://rillo-web.firebaseio.com",
+    projectId: "rillo-web",
+    storageBucket: "rillo-web.appspot.com",
+    messagingSenderId: "78389839019",
+    appId: "1:78389839019:web:4c049ee8d70d42a3"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+</script>
+
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+<link href="css/stylep.css" rel="stylesheet"/>
+	
+</head>
+
+<body>
+
+    <div class="containter">
+
+        <div class="row">
+
+            <a href="index.html" class="col-3 mt-4" >
+                <img src="imagenes/back-icon.png" alt="profile icon" id="back-icon">
+            </a>
+            <h1 class="col-5 text-center align-middle" id="titulo-perfil">Selección de Perfil</h1>
+            <div class="col-4"></div>
+        
+        </div>
+
+
+        <div class="row" style="margin-top: 2%;">
+
+            <div class="col-3"></div>
+            <div class="col-5">
+                <div id=profileselector></div>
+            </div>
+    
+            <div class="col-4"></div>
+            
+        </div>
+
+
+        <div class="row" style="margin-top: 1%;">
+
+            <div class="col-3"></div>
+            <div class="col-2">
+                <button type="button" class="btn btn-primary" id="boton-nuevo-perfil" style="text-align: center;" onclick="nuevo_perfil();">Nuevo<br>Perfil</button>
+            </div>
+
+            <div class="col-1"></div>
+
+            <div class="col-2">
+                <button type="button" class="btn btn-danger" id="boton-eliminar-perfil" style="text-align: center;" onclick="eliminar_perfil();">Eliminar<br>Perfil</button>
+            </div>
+
+            <div class="col-4"></div>
+    
+            
+        </div>
+
+
+        <div class="row" style="margin-top: 2%;">
+
+            <div class="col-3"></div>
+            <div class="col-5">
+                <input type="text" class="form-control" id="barra-nombre" placeholder="Nombre del perfil">
+            </div>
+    
+            <div class="col-4"></div>
+            
+        </div>
+
+
+        <div class="row" style="margin-top: 2%;">
+
+            <div class="col-3"></div>
+            <div class="col-5 text-center">
+                <h4>Intensidad</h4>
+                <input type="range" class="custom-range" min="0" max="5" step="0.1" id="slider-intensidad">
+            </div>
+    
+            <div class="col-4"></div>
+            
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-3"></div>
+            <div class="col-5 text-center">
+
+                <div class="row">
+                    <div class="col-1">
+                        <span>min</span>
+                    </div>
+                    
+                    <div class="col">
+
+                    </div>
+
+                    <div class="col-1">
+                        <span>max</span>
+                    </div>
+
+                </div>
+            </div>
+    
+            <div class="col-4"></div>
+            
+        </div>
+
+
+        <div class="row" style="margin-top: 2%;">
+
+            <div class="col-3"></div>
+            <div class="col-5">
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col text-center align-middle">
+                                <h4 style="font-size: 1.5vw;">Tiempo Activo</h4>
+                                    
+                            </div>
+
+                            <div class="col text-center">
+                                <h4 style="text-align: center; font-size: 1.5vw;">Tiempo entre Pulso y Pulso</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                    <input type="text" class="form-control" id="barra-t-on">
+                                    <p id="segundo_1">Segundos</p>
+                            </div>
+
+                            <div class="col">
+                                <input type="text" class="form-control" id="barra-t-off">
+                                <p id="segundo_2">Segundos</p>
+                            </div>
+
+                        </div>  
+                    </div>
+                </div>
+        
+            </div>
+            <div class="col-4"></div>
+        </div>
+        
+        <div class="row" style="margin-top: 2%;">
+
+            <div class="col-3"></div>
+            <div class="col-5 text-center">
+                <h4>Tipo de Vibración</h4>
+                
+                <div class="row mt-3" >
+                    <div class="col-6">
+                        <button type="button" class="btn btn-light" id="boton-wave-rect" onclick="seleccion_tipo_vibracion(1);"> <img src="imagenes/rect-icon.png" alt="Icono señal cuadrada" style="width: 50%;" id="rect-icon"></button>
+                    </div>
+
+                    <div class="col-6">
+                        <button type="button" class="btn btn-light" id="boton-wave-triad" onclick="seleccion_tipo_vibracion(2);""> <img src="imagenes/triad-icon.png" alt="Icono señal triangular" style="width: 50%;" id="triad-icon"></button>
+                    </div>
+                </div>
+            
+
+            
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-light" id="boton-wave-click" onclick="seleccion_tipo_vibracion(3);""> <img src="imagenes/click-icon.png" alt="Icono señal click" style="width: 50%;" id="click-icon"></button>
+                    </div>
+
+                    <div class="col-6">
+                        <button type="button" class="btn btn-light" id="boton-wave-ramp" onclick="seleccion_tipo_vibracion(4);""> <img src="imagenes/ramp-icon.png" alt="Icono señal rampa" style="width: 50%;" id="ramp-icon"></button>
+                    </div>
+                </div>
+                    
+                </div>
+            
+    
+            <div class="col-4"></div>
+            
+        </div>
+
+        <div class="row" style="margin-top: 2%; margin-bottom: 5%;">
+
+            <div class="col-3"></div>
+            <div class="col-5 text-center">
+                    <button type="button" class="btn btn-primary" id="boton-guardar" onclick="guardar_perfil();"> Guardar Perfil</button>
+            </div>
+    
+            <div class="col-4"></div>
+            
+        </div>
+
+
+    </div>
+
+<script>
+
+var db = firebase.firestore();
+
+var perfiles = [];
+var array_perfiles;
+var key_perfil_activo;
+var funcion_seleccionada = 1;
+
+
+profile_set()
+
+
+function init_dropd() {
+    document.getElementById('profileselector').innerHTML = '';
+    var dropdown = '';
+
+    for(var r=0;r<(perfiles.length);r++)
+    {
+    dropdown += '<a class="dropdown-item" href="javascript:profile_selector(' + r + ');">' + perfiles[r] + '</a>';
+    }
+
+    document.getElementById('profileselector').innerHTML = '<div class="dropdown show"> <a class="btn btn-light btn-lg dropdown-toggle " href="#" role="button" id="perfil_act_id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a><div class="dropdown-menu" aria-labelledby="dropdownMenuLink">' + dropdown + '</div></div></div>';
+
+    document.getElementById('perfil_act_id').innerHTML = key_perfil_activo;
+}
+
+function nuevo_perfil(){
+    document.getElementById('perfil_act_id').innerHTML = "Nuevo perfil";
+    document.getElementById("barra-nombre").value = "";
+    document.getElementById("slider-intensidad").value = 2.5;
+    document.getElementById("barra-t-on").value = "";
+    document.getElementById("barra-t-off").value = "";
+
+    document.getElementById("boton-wave-rect").classList.remove("btn-primary");
+    document.getElementById("boton-wave-rect").classList.add("btn-light");
+    document.getElementById("rect-icon").src = "imagenes/rect-icon.png"
+
+    document.getElementById("boton-wave-triad").classList.remove("btn-primary");
+    document.getElementById("boton-wave-triad").classList.add("btn-light");
+    document.getElementById("triad-icon").src = "imagenes/triad-icon.png"
+
+    document.getElementById("boton-wave-click").classList.remove("btn-primary");
+    document.getElementById("boton-wave-click").classList.add("btn-light");
+    document.getElementById("click-icon").src = "imagenes/click-icon.png"
+
+    document.getElementById("boton-wave-ramp").classList.remove("btn-primary");
+    document.getElementById("boton-wave-ramp").classList.add("btn-light");
+    document.getElementById("ramp-icon").src = "imagenes/ramp-icon.png"    
+}
+
+function guardar_perfil(){
+
+    var v_intensidad = 0;
+    var tiempo_on = 0;
+    var tiempo_off = 0;
+    var key_perfil_guardar = "default";
+
+    
+
+    array_perfiles[key_perfil_activo][4] = false;
+
+    if(document.getElementById('barra-nombre').value != "")
+    {
+        var key_perfil_guardar = document.getElementById('barra-nombre').value;
+    }
+
+    
+    tiempo_off = parseFloat(document.getElementById('barra-t-off').value);
+    
+    tiempo_on = parseFloat(document.getElementById('barra-t-on').value);
+    
+    if(isNaN(tiempo_off)){
+        tiempo_off = 1
+    }
+
+    if(isNaN(tiempo_on)){
+        tiempo_on = 1
+    }
+
+    v_intensidad = parseFloat(document.getElementById('slider-intensidad').value);
+    
+    datos_perfil_guardar = [v_intensidad, tiempo_on, tiempo_off, funcion_seleccionada,  true];
+    
+    
+    db.collection("rillo-main").doc("perfiles").update({
+            [key_perfil_activo]: array_perfiles[key_perfil_activo],
+            [key_perfil_guardar]: datos_perfil_guardar
+        }).then(profile_set())
+
+    db.collection("rillo-main").doc("funciones").update({
+    dato: datos_perfil_guardar,
+    funcion: "perfil_vibracion",
+    recibido: 0
+    })
+
+    document.getElementById("boton-guardar").classList.remove("btn-primary");
+    document.getElementById("boton-guardar").classList.add("btn-success");
+    
+    setTimeout(() => {
+        document.getElementById("boton-guardar").classList.remove("btn-success");
+        document.getElementById("boton-guardar").classList.add("btn-primary");
+
+    }, 5500);
+
+}
+
+function eliminar_perfil(){
+    var key_perfil_eliminar = document.getElementById('perfil_act_id').innerHTML;
+    
+
+    array_perfiles['default'][4] = true;
+
+    if(key_perfil_eliminar != 'default'){
+        db.collection("rillo-main").doc("perfiles").update({
+            default: array_perfiles['default'],
+            [key_perfil_eliminar]: firebase.firestore.FieldValue.delete()
+        }).then(profile_set())
+    }
+    else{
+        console.log("Error, default profile isn't supposed to be deleted");
+        
+    }
+
+}
+
+function profile_selector(choice){
+    let perfil_act = perfiles[choice]; 
+
+    array_perfiles[key_perfil_activo][4] = false;
+    array_perfiles[perfil_act][4] = true;
+    
+    db.collection("rillo-main").doc("perfiles").update({
+        [key_perfil_activo]: array_perfiles[key_perfil_activo],
+        [perfil_act]: array_perfiles[perfil_act]
+    })
+
+    db.collection("rillo-main").doc("funciones").update({
+        dato: array_perfiles[perfil_act],
+        funcion: "perfil_vibracion",
+        recibido: 0
+    })
+
+    key_perfil_activo = perfil_act;
+
+    profile_set()
+
+  }
+
+  function seleccion_tipo_vibracion(index_tipo_vibracion){
+
+    funcion_seleccionada = index_tipo_vibracion;
+
+    switch(index_tipo_vibracion) {
+        case 1:
+            document.getElementById("boton-wave-rect").classList.remove("btn-light");
+            document.getElementById("boton-wave-rect").classList.add("btn-primary");
+            document.getElementById("rect-icon").src = "imagenes/rect-iconw.png"
+
+            document.getElementById("boton-wave-triad").classList.remove("btn-primary");
+            document.getElementById("boton-wave-triad").classList.add("btn-light");
+            document.getElementById("triad-icon").src = "imagenes/triad-icon.png"
+
+            document.getElementById("boton-wave-click").classList.remove("btn-primary");
+            document.getElementById("boton-wave-click").classList.add("btn-light");
+            document.getElementById("click-icon").src = "imagenes/click-icon.png"
+
+            document.getElementById("boton-wave-ramp").classList.remove("btn-primary");
+            document.getElementById("boton-wave-ramp").classList.add("btn-light");
+            document.getElementById("ramp-icon").src = "imagenes/ramp-icon.png"
+            break;
+
+        case 2:
+
+            document.getElementById("boton-wave-triad").classList.remove("btn-light");
+            document.getElementById("boton-wave-triad").classList.add("btn-primary");
+            document.getElementById("triad-icon").src = "imagenes/triad-iconw.png"
+
+            document.getElementById("boton-wave-rect").classList.remove("btn-primary");
+            document.getElementById("boton-wave-rect").classList.add("btn-light");
+            document.getElementById("rect-icon").src = "imagenes/rect-icon.png"
+
+            document.getElementById("boton-wave-click").classList.remove("btn-primary");
+            document.getElementById("boton-wave-click").classList.add("btn-light");
+            document.getElementById("click-icon").src = "imagenes/click-icon.png"
+
+            document.getElementById("boton-wave-ramp").classList.remove("btn-primary");
+            document.getElementById("boton-wave-ramp").classList.add("btn-light");
+            document.getElementById("ramp-icon").src = "imagenes/ramp-icon.png"
+            break;
+            
+        case 3:
+
+            document.getElementById("boton-wave-click").classList.remove("btn-light");
+            document.getElementById("boton-wave-click").classList.add("btn-primary");
+            document.getElementById("click-icon").src = "imagenes/click-iconw.png"
+
+            document.getElementById("boton-wave-triad").classList.remove("btn-primary");
+            document.getElementById("boton-wave-triad").classList.add("btn-light");
+            document.getElementById("triad-icon").src = "imagenes/triad-icon.png"
+
+            document.getElementById("boton-wave-rect").classList.remove("btn-primary");
+            document.getElementById("boton-wave-rect").classList.add("btn-light");
+            document.getElementById("rect-icon").src = "imagenes/rect-icon.png"
+
+            document.getElementById("boton-wave-ramp").classList.remove("btn-primary");
+            document.getElementById("boton-wave-ramp").classList.add("btn-light");
+            document.getElementById("ramp-icon").src = "imagenes/ramp-icon.png"
+            break;
+
+        case 4:
+
+            document.getElementById("boton-wave-ramp").classList.remove("btn-light");
+            document.getElementById("boton-wave-ramp").classList.add("btn-primary");
+            document.getElementById("ramp-icon").src = "imagenes/ramp-iconw.png"
+
+            document.getElementById("boton-wave-triad").classList.remove("btn-primary");
+            document.getElementById("boton-wave-triad").classList.add("btn-light");
+            document.getElementById("triad-icon").src = "imagenes/triad-icon.png"
+
+            document.getElementById("boton-wave-click").classList.remove("btn-primary");
+            document.getElementById("boton-wave-click").classList.add("btn-light");
+            document.getElementById("click-icon").src = "imagenes/click-icon.png"
+
+            document.getElementById("boton-wave-rect").classList.remove("btn-primary");
+            document.getElementById("boton-wave-rect").classList.add("btn-light");
+            document.getElementById("rect-icon").src = "imagenes/rect-icon.png"
+            break;
+        default:
+            // code block
+        }
+  }
+
+  function profile_set(){
+    try {
+        document.getElementById("perfil_act_id").classList.remove("btn-light");
+        document.getElementById("perfil_act_id").classList.add("btn-warning");
+    }
+    catch(err) {
+        console.log("warning: missed profile (not a problem tho)")
+    }
+    
+
+
+    var datos_refrescados = new Promise((resolve, reject) => {
+        db.collection("rillo-main").doc("perfiles").get().then(function(doc) {
+            if (doc.exists) {
+
+                array_perfiles = doc.data();
+                perfiles = [];
+                for (let [key, value] of Object.entries(doc.data())) {
+                    perfiles.push(key);
+                    if(value[4])
+                    {
+                        key_perfil_activo = key;
+                    }
+                }
+                init_dropd()
+                
+                
+                resolve(true)
+
+                
+            } else {
+                // doc.data() will be undefined in this case
+                reject(true)
+                console.log("No such document!");
+            }
+        }).catch(function(error) {
+            reject(true)
+            console.log("Error getting document:", error);
+        });
+    });
+
+    
+
+    datos_refrescados.then((resolve)=>{
+    document.getElementById('perfil_act_id').innerHTML = key_perfil_activo;
+    document.getElementById("barra-nombre").value = key_perfil_activo;
+    document.getElementById("slider-intensidad").value = array_perfiles[key_perfil_activo][0];
+    document.getElementById("barra-t-on").value = array_perfiles[key_perfil_activo][1];
+    document.getElementById("barra-t-off").value = array_perfiles[key_perfil_activo][2];
+
+    funcion_seleccionada = array_perfiles[key_perfil_activo][3];
+
+    switch(array_perfiles[key_perfil_activo][3]) {
+        
+        case 1:
+            document.getElementById("boton-wave-rect").classList.remove("btn-light");
+            document.getElementById("boton-wave-rect").classList.add("btn-primary");
+            document.getElementById("rect-icon").src = "imagenes/rect-iconw.png"
+
+            document.getElementById("boton-wave-triad").classList.remove("btn-primary");
+            document.getElementById("boton-wave-triad").classList.add("btn-light");
+            document.getElementById("triad-icon").src = "imagenes/triad-icon.png"
+
+            document.getElementById("boton-wave-click").classList.remove("btn-primary");
+            document.getElementById("boton-wave-click").classList.add("btn-light");
+            document.getElementById("click-icon").src = "imagenes/click-icon.png"
+
+            document.getElementById("boton-wave-ramp").classList.remove("btn-primary");
+            document.getElementById("boton-wave-ramp").classList.add("btn-light");
+            document.getElementById("ramp-icon").src = "imagenes/ramp-icon.png"
+            break;
+
+        case 2:
+            document.getElementById("boton-wave-triad").classList.remove("btn-light");
+            document.getElementById("boton-wave-triad").classList.add("btn-primary");
+            document.getElementById("triad-icon").src = "imagenes/triad-iconw.png"
+
+            document.getElementById("boton-wave-rect").classList.remove("btn-primary");
+            document.getElementById("boton-wave-rect").classList.add("btn-light");
+            document.getElementById("rect-icon").src = "imagenes/rect-icon.png"
+
+            document.getElementById("boton-wave-click").classList.remove("btn-primary");
+            document.getElementById("boton-wave-click").classList.add("btn-light");
+            document.getElementById("click-icon").src = "imagenes/click-icon.png"
+
+            document.getElementById("boton-wave-ramp").classList.remove("btn-primary");
+            document.getElementById("boton-wave-ramp").classList.add("btn-light");
+            document.getElementById("ramp-icon").src = "imagenes/ramp-icon.png"
+            break;
+            
+        case 3:
+            document.getElementById("boton-wave-click").classList.remove("btn-light");
+            document.getElementById("boton-wave-click").classList.add("btn-primary");
+            document.getElementById("click-icon").src = "imagenes/click-iconw.png"
+
+            document.getElementById("boton-wave-triad").classList.remove("btn-primary");
+            document.getElementById("boton-wave-triad").classList.add("btn-light");
+            document.getElementById("triad-icon").src = "imagenes/triad-icon.png"
+
+            document.getElementById("boton-wave-rect").classList.remove("btn-primary");
+            document.getElementById("boton-wave-rect").classList.add("btn-light");
+            document.getElementById("rect-icon").src = "imagenes/rect-icon.png"
+
+            document.getElementById("boton-wave-ramp").classList.remove("btn-primary");
+            document.getElementById("boton-wave-ramp").classList.add("btn-light");
+            document.getElementById("ramp-icon").src = "imagenes/ramp-icon.png"
+            break;
+
+        case 4:
+            document.getElementById("boton-wave-ramp").classList.remove("btn-light");
+            document.getElementById("boton-wave-ramp").classList.add("btn-primary");
+            document.getElementById("ramp-icon").src = "imagenes/ramp-iconw.png"
+
+            document.getElementById("boton-wave-triad").classList.remove("btn-primary");
+            document.getElementById("boton-wave-triad").classList.add("btn-light");
+            document.getElementById("triad-icon").src = "imagenes/triad-icon.png"
+
+            document.getElementById("boton-wave-click").classList.remove("btn-primary");
+            document.getElementById("boton-wave-click").classList.add("btn-light");
+            document.getElementById("click-icon").src = "imagenes/click-icon.png"
+
+            document.getElementById("boton-wave-rect").classList.remove("btn-primary");
+            document.getElementById("boton-wave-rect").classList.add("btn-light");
+            document.getElementById("rect-icon").src = "imagenes/rect-icon.png"
+            break;
+        default:
+            // code block
+        }
+        document.getElementById("perfil_act_id").classList.remove("btn-warning");
+        document.getElementById("perfil_act_id").classList.add("btn-light");
+    }).catch((error) => console.log("error"))
+
+  }
+
+
+</script>
+
+</body>
+</html>

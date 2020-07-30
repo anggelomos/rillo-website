@@ -1,0 +1,63 @@
+#back-icon{
+    margin-left: 80%;
+    width: 20%;
+    border-radius: 20%;
+}
+
+#titulo-perfil{
+    margin-top: 2%;
+    font-size: 3vw;
+    color: gray;
+}
+
+#boton-nuevo-perfil{
+    width: 100%;
+}
+
+
+#boton-eliminar-perfil{
+    width: 100%;
+}
+
+#barra-seleccion{
+    width: 100%;
+}
+
+#barra-t-on{
+    font-size: 1.5vw;
+    width: 40%;
+    height: 70%;
+    float: left;
+    margin-top: 3%;
+    margin-left: 10%;
+}
+
+#segundo_1{
+    margin-top: 10%;
+    margin-left: 55%;
+    font-size: 1.1vw;
+}
+
+#barra-t-off{
+    font-size: 1.5vw;
+    width: 40%;
+    height: 70%;
+    float: left;
+    margin-top: 3%;
+    margin-left: 10%;
+}
+
+#segundo_2{
+    margin-top: 10%;
+    margin-left: 55%;
+    font-size: 1.1vw;
+}
+
+#boton-guardar{
+    width: 100%;
+    height: 140%;
+}
+
+#perfil_act_id{
+    width: 100%;
+}

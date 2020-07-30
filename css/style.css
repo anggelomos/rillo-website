@@ -1,0 +1,100 @@
+#profile-icon{
+    margin-left: 50%;
+    width: 30%;
+    border-radius: 20%;
+}
+
+#titulo-rillo{
+    margin-top: 2%;
+    font-size: 4.5vw;
+}
+
+#barra-escribir{
+    width: 100%;
+    margin-left: auto;
+}
+
+#boton-enviar{
+    width: 40%;
+    margin-right: auto;
+}
+
+#boton-generador{
+    width: 100%;
+}
+
+#generador-icon{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 25%;
+}
+
+#boton-l-aleatoria{
+    height: 100%;
+    width: 100%;
+    
+}
+
+
+#letra-aleatoria{
+    font-size: 150%;
+    margin: 0;    
+}
+
+
+#texto-l-aleatoria{
+    display: block;
+    text-align: center;
+    margin-top: 20%;
+    margin-bottom: 0%;
+    line-height: 100%;
+}
+
+#boton-conectar{
+    margin-top: 5%;
+    width: 100%;
+}
+
+.col-celda{
+    padding: 0% 1% 0% 1%;
+}
+
+#boton-patron{
+    width: 100%;
+}
+
+#boton-patron p{
+    font-size: 1.3em;
+    margin: 0%;
+}
+
+.boton_celda_iz{
+    float: right;
+    margin: 3% 0% 0% 50%;
+    height: 35%;
+    border-radius: 10%;
+}
+
+.boton_celda_der{
+    float: left;
+    margin: 3% 50% 0% 0%;
+    height: 35%;
+    border-radius: 10%;
+}
+
+.circulo_celda{
+    width: 100%;
+}
+
+.btn_celda{
+    float:left;
+    height: 20%;
+    width: 45%;
+    margin-right: 50%;
+    margin-bottom: 5%;
+}
+
+.btn_celda p{
+    font-size: 1.2em;
+    margin: 0%;
+}

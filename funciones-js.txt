@@ -1,0 +1,106 @@
+var db = firebase.firestore();
+
+db.collection("cities").doc("LA").set({
+    name: "Los Angeles",
+    state: "CA",
+    country: "USA"
+})
+
+db.collection("rillo-main").doc("funciones").update({
+    recibido: 1
+})
+
+db.collection("rillo-main").doc("perfiles").update({
+    default: [2.5,3,1,2, true]
+})
+
+db.collection("rillo-main").doc("perfiles").update({
+    default: firebase.firestore.FieldValue.arrayRemove("8,3,1,2","false")
+})
+
+db.collection("cities").doc("LA").delete()
+
+var acer
+
+function shower(){
+    for (let [key, value] of Object.entries(acer)) {
+        console.log(`${key}: ${value[4]}`);
+    }
+    console.log(acer.default[3])
+}
+
+db.collection("rillo-main").doc("perfiles").get().then(function(doc) {
+    if (doc.exists) {
+        console.log("Document data:", doc.data());
+        acer = doc.data();
+        shower()
+        
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
+
+
+db.collection("rillo-main").doc("funciones")
+    .onSnapshot(function(doc) {
+        console.log("Yaaaas!");
+        console.log("Current data: ", doc.data());
+    });
+
+
+HTML!
+
+function enviador(){
+    let lectura_barra = document.getElementById('barra-escribir').value;
+    console.log(lectura_barra);
+    
+}
+
+function enviador(){
+    
+    document.getElementById("barra-escribir").value= "Hide Filter";
+    
+}
+
+function enviador(){
+    
+    document.getElementById("letra-aleatoria").innerHTML= "z";
+    
+}
+
+function enviador(){
+
+    document.getElementById("boton-enviar").classList.remove("btn-primary");
+    document.getElementById("boton-enviar").classList.add("btn-light");
+    setTimeout(function(){
+    document.getElementById("boton-enviar").classList.remove("btn-light");
+    document.getElementById("boton-enviar").classList.add("btn-primary");}, 1000);
+    
+}
+
+
+
+<div id=profileselector></div>
+
+function init_dropd() {
+      var dropdown = '';
+
+      for(var r=0;r<(perfiles.length);r++)
+      {
+        dropdown += '<a class="dropdown-item" href="javascript:profile_selector(' + r + ');">' + perfiles[r] + '</a>';
+      }
+
+      document.getElementById('profileselector').innerHTML = '<div class="dropdown show m-1 "> <a class="btn btn-light dropdown-toggle " href="#" role="button" id="perfil_act_id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a><div class="dropdown-menu" aria-labelledby="dropdownMenuLink">' + dropdown + '</div></div></div>';
+
+      document.getElementById('perfil_act_id').innerHTML = perfiles[0];
+    }
+
+function profile_selector(choice){
+      grupo_act = perfiles[choice];
+      document.getElementById('perfil_act_id').innerHTML = grupo_act;
+  }
+
+
