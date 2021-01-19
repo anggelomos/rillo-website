@@ -149,10 +149,7 @@ function enviador(){
     setTimeout(function(){
     document.getElementById("boton-enviar").classList.remove("btn-warning");
     document.getElementById("boton-enviar").classList.add("btn-primary");
-    document.getElementById('barra-escribir').value = '';}, 500);
-
-    
-    
+    document.getElementById('barra-escribir').value = '';}, 500);    
 }
 
 function send_generador(){
@@ -202,7 +199,7 @@ function send_letra_aleatoria(){
                 recibido: 0
             })
     
-
+    document.getElementById('texto-l-aleatoria').innerHTML = "Letra aleatoria";
     document.getElementById('letra-aleatoria').innerHTML = letra;
     document.getElementById("boton-l-aleatoria").classList.remove("btn-light");
     document.getElementById("boton-l-aleatoria").classList.add("btn-primary");
@@ -215,6 +212,7 @@ db.collection("rillo-main").doc("funciones")
     .onSnapshot(function(doc) {
         
         conectado_listener(doc.data());
+        analogico_listener(doc.data());
     });
 
 function conectado_listener(data){
@@ -230,9 +228,14 @@ function conectado_listener(data){
     }
 }
 
-function conectado_boton(){
-    
+function analogico_listener(data){
+    if(data["funcion"] == "camara"){
+        document.getElementById('texto-l-aleatoria').innerHTML = "Lectura camara";
+        document.getElementById('letra-aleatoria').innerHTML = data["dato"];
+    }
+}
 
+function conectado_boton(){
     var ver_conexión = new Promise((resolve, reject) => {
         db.collection("rillo-main").doc("funciones").get().then(function(doc) {
             if (doc.exists) {
