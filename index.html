@@ -144,6 +144,11 @@ function enviador(){
         
     }
 
+    var current_date = new Date();
+    var current_date_string = current_date.toISOString().substring(0, 19);
+    current_date_string = current_date_string.replace("T", " ");
+    console.log("Envio señal\t" + current_date_string);
+
     document.getElementById("boton-enviar").classList.remove("btn-primary");
     document.getElementById("boton-enviar").classList.add("btn-warning");
     setTimeout(function(){
