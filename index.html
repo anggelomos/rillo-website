@@ -145,7 +145,7 @@ function enviador(){
     }
 
     var current_date = new Date();
-    var current_date_string = current_date.toISOString().substring(0, 19);
+    var current_date_string = current_date.toISOString();
     current_date_string = current_date_string.replace("T", " ");
     console.log("Envio señal\t" + current_date_string);
    
